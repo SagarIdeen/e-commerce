@@ -15,6 +15,6 @@ email: string;
 @Column()
 password: string;
 
-@Column({default:'user'})
+@Column({default:'USER'})
 role: string;
 }
