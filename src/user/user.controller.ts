@@ -14,6 +14,11 @@ export class UserController {
         return this.userService.create(createUserDto);
     }
 
+    @Post('/admin')
+    createAdmin(@Body() createUserDto: CreateUserDto){
+        return this.userService.createAdmin(createUserDto);
+    }
+
     @Get()
     getUsers(){
         return this.userService.get();

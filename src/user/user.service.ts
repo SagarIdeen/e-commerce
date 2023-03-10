@@ -13,7 +13,13 @@ export class UserService {
     async create(createUserDto: CreateUserDto){
         const userName =await this.findByEmail(createUserDto.email)
         
-        return userName ? 'username already exists' : await this.userRepository.save(createUserDto)
+        return userName && userName.role === 'user' ? 'username already exists' : await this.userRepository.save(createUserDto)
+    }
+
+    async createAdmin(createUserDto: CreateUserDto){
+        const userName =await this.findByEmail(createUserDto.email)
+        
+        return userName && userName.role === 'admin' ? 'username already exists' : await this.userRepository.save(createUserDto)
     }
 
     async get(): Promise<User[]>{

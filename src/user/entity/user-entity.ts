@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -14,4 +14,7 @@ email: string;
 
 @Column()
 password: string;
+
+@Column({default:'user'})
+role: string;
 }
