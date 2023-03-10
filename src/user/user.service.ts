@@ -11,7 +11,9 @@ export class UserService {
     private userRepository: Repository<User>
 
     async create(createUserDto: CreateUserDto){
-        return await this.userRepository.save(createUserDto)
+        const userName =await this.findByEmail(createUserDto.email)
+        
+        return userName ? 'username already exists' : await this.userRepository.save(createUserDto)
     }
 
     async get(): Promise<User[]>{
