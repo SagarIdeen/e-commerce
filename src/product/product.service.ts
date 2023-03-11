@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from 'src/master/category/entity/category-entity';
+import { Category } from 'src/master/category/entity/category-entity.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from './entity/product-entity';
+import { Product } from './entity/product-entity.entity';
 
 @Injectable()
 export class ProductService {
@@ -58,10 +58,6 @@ export class ProductService {
     } else {
       return `Product #${id} is not found`;
     }
-
-    // return category
-    //   ? this.productRepository.update(id, updateProductDto)
-    //   : `Product #${id} is not found`;
   }
 
   async delete(id: number) {

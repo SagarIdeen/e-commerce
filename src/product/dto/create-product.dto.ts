@@ -1,17 +1,15 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { Category } from "src/master/category/entity/category-entity";
-import { DeepPartial } from "typeorm";
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateProductDto {
-    @IsString()
-    name: string;
+  @IsString()
+  name: string;
 
-    @IsNumber()
-    price: number;
+  @IsNumber()
+  price: number;
 
-    @IsString()
-    url: string;
+  @IsString()
+  url: string;
 
-    @IsNotEmpty()
-    readonly categoryId: number
+  @IsNotEmpty()
+  readonly categoryId: number;
 }
