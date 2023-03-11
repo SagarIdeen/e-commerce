@@ -12,6 +12,8 @@ import { Category } from './master/category/entity/category-entity.entity';
 import { Product } from './product/entity/product-entity.entity';
 import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/entity/cart-entity.entity';
+import { AddressModule } from './address/address.module';
+import { Address } from './address/entity/address-entity.entity';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { Cart } from './cart/entity/cart-entity.entity';
       username: 'user1',
       password: 'changeme',
       database: 'ECommerce',
-      entities: [User, Category, Product, Cart],
+      entities: [User, Category, Product, Cart, Address],
       synchronize: true,
       namingStrategy: new SnakeNamingStrategy(),
     }),
@@ -31,6 +33,7 @@ import { Cart } from './cart/entity/cart-entity.entity';
     ProductModule,
     CategoryModule,
     CartModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [AppService],
