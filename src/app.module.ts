@@ -14,6 +14,10 @@ import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/entity/cart-entity.entity';
 import { AddressModule } from './address/address.module';
 import { Address } from './address/entity/address-entity.entity';
+import { SalesModule } from './sales/sales.module';
+import { SalesChild } from './sales/entity/sales-child-entity.entity';
+import { SalesMaster } from './sales/entity/sales-master.entity.entity';
+// import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -24,9 +28,18 @@ import { Address } from './address/entity/address-entity.entity';
       username: 'user1',
       password: 'changeme',
       database: 'ECommerce',
-      entities: [User, Category, Product, Cart, Address],
+      entities: [
+        User,
+        Category,
+        Product,
+        Cart,
+        Address,
+        SalesChild,
+        SalesMaster,
+      ],
       synchronize: true,
       namingStrategy: new SnakeNamingStrategy(),
+      logging: true,
     }),
     UserModule,
     AuthModule,
@@ -34,8 +47,11 @@ import { Address } from './address/entity/address-entity.entity';
     CategoryModule,
     CartModule,
     AddressModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  // constructor(dataSource: DataSource) {}
+}
