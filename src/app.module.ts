@@ -18,6 +18,8 @@ import { SalesModule } from './sales/sales.module';
 import { SalesChild } from './sales/entity/sales-child-entity.entity';
 import { SalesMaster } from './sales/entity/sales-master.entity.entity';
 // import { DataSource } from 'typeorm';
+import { ReportsModule } from './reports/reports.module';
+import { QueryHelper } from './common/queryHelper.service';
 
 @Module({
   imports: [
@@ -48,9 +50,11 @@ import { SalesMaster } from './sales/entity/sales-master.entity.entity';
     CartModule,
     AddressModule,
     SalesModule,
+    ReportsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
+  // exports: [QueryHelper],
 })
 export class AppModule {
   // constructor(dataSource: DataSource) {}

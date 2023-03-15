@@ -13,6 +13,8 @@ import { CreateSalesMasterDto } from './dto/create-sales.dto';
 import { SalesService } from './sales.service';
 
 @ApiTags('Sales')
+@ApiBearerAuth('JWT')
+@UseGuards(JwtAuthGuard)
 @Controller('sales')
 export class SalesController {
   constructor(private salesService: SalesService) {}
@@ -21,8 +23,6 @@ export class SalesController {
     return this.salesService.create(createSalesMasterDto);
   }
 
-  @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
   @Get(':userId')
   getOrderByUserId(@Param('userId') userId: number) {
     return this.salesService.getByUserId(userId);
