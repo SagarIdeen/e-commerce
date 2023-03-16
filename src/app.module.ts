@@ -20,6 +20,8 @@ import { SalesMaster } from './sales/entity/sales-master.entity.entity';
 // import { DataSource } from 'typeorm';
 import { ReportsModule } from './reports/reports.module';
 import { QueryHelper } from './common/queryHelper.service';
+import { SalesReturnModule } from './sales_return/sales_return.module';
+import { SalesReturn } from './sales_return/entity/sales-return-entity.entity';
 
 @Module({
   imports: [
@@ -38,6 +40,7 @@ import { QueryHelper } from './common/queryHelper.service';
         Address,
         SalesChild,
         SalesMaster,
+        SalesReturn,
       ],
       synchronize: true,
       namingStrategy: new SnakeNamingStrategy(),
@@ -51,6 +54,7 @@ import { QueryHelper } from './common/queryHelper.service';
     AddressModule,
     SalesModule,
     ReportsModule,
+    SalesReturnModule,
   ],
   controllers: [AppController],
   providers: [AppService],
