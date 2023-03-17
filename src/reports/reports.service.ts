@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
-import { convertToQueryWithParameters } from 'src/common/convertToQueryWithParameters';
 import { QueryHelper } from 'src/common/queryHelper.service';
 import { Product } from 'src/product/entity/product-entity.entity';
 import { SalesChild } from 'src/sales/entity/sales-child-entity.entity';
-import { SalesMaster } from 'src/sales/entity/sales-master.entity.entity';
+import { SalesReturn } from 'src/sales_return/entity/sales-return-entity.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateReportDto } from './dto/create-report.dto';
 
@@ -12,8 +11,8 @@ import { CreateReportDto } from './dto/create-report.dto';
 export class ReportsService {
   @InjectRepository(Product)
   private product: Repository<Product>;
-  @InjectRepository(SalesMaster)
-  private salesMasterRepository: Repository<SalesMaster>;
+  @InjectRepository(SalesReturn)
+  private salesReturnRepo: Repository<SalesReturn>;
   @InjectRepository(SalesChild)
   private readonly salesChildRepo: Repository<SalesChild>;
 
@@ -61,5 +60,14 @@ export class ReportsService {
     // return this.dataSource.query(
     //   `SELECT * FROM product LEFT JOIN sales_child ON product.id = sales_child.product_id WHERE product.created_at BETWEEN '${f}' AND '${t}';`,
     // );
+  }
+
+  async reportBySalesReturn(): Promise<SalesReturn[]> {
+    return await this.salesReturnRepo
+      .createQueryBuilder('salesReturn')
+      .leftJoinAndSelect('salesReturn.salesChild', 'salesChild')
+      .leftJoinAndSelect('salesChild.salesMaster', 'salesMaster')
+      .leftJoinAndSelect('salesMaster.user', 'user')
+      .getMany();
   }
 }

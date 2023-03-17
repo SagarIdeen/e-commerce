@@ -16,8 +16,8 @@ export class ReportsController {
   reportByProductFilterDate(@Query() createReportDto: CreateReportDto) {
     return this.reportsService.reportByProductFilterDate(createReportDto);
   }
-  // @Get('/product/filter')
-  // reportByProductFilterDate(@Query() createReportDto: CreateReportDto) {
-  //   return this.reportsService.reportByProductFilterDate(createReportDto);
-  // }
+  @Get('/sales-return')
+  reportBySalesReturn() {
+    return this.reportsService.reportBySalesReturn();
+  }
 }
