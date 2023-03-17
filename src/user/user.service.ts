@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -9,6 +10,7 @@ import { User } from './entity/user-entity.entity';
 export class UserService {
   @InjectRepository(User)
   private userRepository: Repository<User>;
+  // constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
   async create(createUserDto: CreateUserDto) {
     const userName = await this.findByEmail(createUserDto.email);
@@ -26,8 +28,12 @@ export class UserService {
       : await this.userRepository.save(createUserDto);
   }
 
-  async get(): Promise<User[]> {
-    return await this.userRepository.find();
+  async get(@Query() paginationQuery: PaginationQueryDto) {
+    const { limit, offset } = paginationQuery;
+    return await this.userRepository.find({
+      skip: offset,
+      take: limit,
+    });
   }
 
   async show(id: number) {

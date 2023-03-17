@@ -6,8 +6,10 @@ import {
   Param,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { number } from 'yargs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -29,8 +31,8 @@ export class UserController {
   }
 
   @Get()
-  getUsers() {
-    return this.userService.get();
+  getUsers(@Query() paginationQuery: PaginationQueryDto) {
+    return this.userService.get(paginationQuery);
   }
 
   @Get(':id')
