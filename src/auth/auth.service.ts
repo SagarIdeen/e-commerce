@@ -1,28 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
+import { CreateAuthDto } from './dto/create-aut.dto';
 
 @Injectable()
 export class AuthService {
-constructor(
+  constructor(
     private userService: UserService,
-    private jwtService: JwtService
-    ){}
+    private jwtService: JwtService,
+  ) {}
 
-async validateUser(email: string, password: string): Promise<any>{
+  async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userService.findByEmail(email);
-    if(user && user.password === password) {
-        const { password, ...result} = user
-        return result;
+    if (user && user.password === password) {
+      const { password, ...result } = user;
+      return result;
     }
-    return null;
-}
+    throw new HttpException('Invalid Credentials', HttpStatus.FORBIDDEN);
+  }
 
-async login(user: any){
-    const payload = { email : user.email, sub : user.id}
-    return{
-        access_token : this.jwtService.sign(payload)
-    }
-}
-
+  async login(createAuthDto: CreateAuthDto) {
+    const result = await this.validateUser(
+      createAuthDto.email,
+      createAuthDto.password,
+    );
+    const payload = { email: result.email, sub: result.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
 }
