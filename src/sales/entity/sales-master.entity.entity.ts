@@ -1,3 +1,4 @@
+import { Address } from 'src/address/entity/address-entity.entity';
 import { BaseEntity } from 'src/common/database/base-entity.entity';
 import { User } from 'src/user/entity/user-entity.entity';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
@@ -13,6 +14,9 @@ export class SalesMaster extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.id)
   user: User;
+
+  @ManyToOne(() => Address, (address) => address.id)
+  address: Address;
 
   @OneToMany(() => SalesChild, (salesChild) => salesChild.salesMaster)
   salesChilds: SalesChild[];

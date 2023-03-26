@@ -23,6 +23,7 @@ export class SalesService {
         totalAmount: dto.totalAmount,
         totalProducts: dto.totalProducts,
         user: { id: dto.userId },
+        address: { id: dto.addressId },
       });
       console.log(_m);
 
@@ -74,6 +75,7 @@ export class SalesService {
     return await this.salesMasterRepository
       .createQueryBuilder('master')
       .leftJoinAndSelect('master.user', 'user')
+      .leftJoinAndSelect('master.address', 'address')
       .leftJoinAndSelect('master.salesChilds', 'salesChilds')
       .leftJoinAndSelect('salesChilds.product', 'product')
       .where('master.user = :userId', { userId: userId })

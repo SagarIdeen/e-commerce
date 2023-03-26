@@ -12,6 +12,9 @@ export class CreateSalesMasterDto {
   readonly userId: number;
 
   @IsNotEmpty()
+  readonly addressId: number;
+
+  @IsNotEmpty()
   @Type(() => SalesChild1)
   @ValidateNested()
   readonly salesChild: SalesChild1[];
