@@ -23,7 +23,7 @@ export class AddressService {
   }
 
   async show(id: number) {
-    return await this.addresddRepository.findOne({
+    return await this.addresddRepository.find({
       where: [{ user: { id } }],
       relations: ['user'],
     });

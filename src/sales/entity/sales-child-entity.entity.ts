@@ -9,7 +9,7 @@ export class SalesChild extends BaseEntity {
   unitPrice: number;
 
   @Column()
-  quatity: number;
+  quantity: number;
 
   @Column()
   subTotal: number;

@@ -12,12 +12,12 @@ export class CreateSalesMasterDto {
   readonly userId: number;
 
   @IsNotEmpty()
-  @Type(() => SalesChild)
+  @Type(() => SalesChild1)
   @ValidateNested()
-  readonly salesChild: SalesChild[];
+  readonly salesChild: SalesChild1[];
 }
 
-class SalesChild {
+class SalesChild1 {
   @IsNumber()
   unitPrice: number;
 

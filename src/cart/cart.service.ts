@@ -23,6 +23,20 @@ export class CartService {
     return await this.cartRepository.find({ relations: ['user', 'product'] });
   }
 
+  async getByUserId(userId: number) {
+    // return await this.cartRepository.find({
+    //   relations: ['user', 'product'],
+    //   where: [{ user: userId }],
+    // });
+
+    return await this.cartRepository
+      .createQueryBuilder('cart')
+      .leftJoinAndSelect('cart.user', 'user')
+      .leftJoinAndSelect('cart.product', 'product')
+      .where('cart.user = :userId', { userId: userId })
+      .getMany();
+  }
+
   async show(id: number) {
     return await this.cartRepository.findOne({
       where: [{ id }],

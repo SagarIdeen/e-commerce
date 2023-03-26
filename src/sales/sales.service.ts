@@ -31,7 +31,7 @@ export class SalesService {
         dto.salesChild.map((item) => {
           return queryRunner.manager.create(SalesChild, {
             salesMaster: _m,
-            quatity: item.quantity,
+            quantity: item.quantity,
             unitPrice: item.unitPrice,
             subTotal: item.subTotal,
             product: { id: item.productId },
