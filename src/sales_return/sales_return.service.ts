@@ -31,6 +31,7 @@ export class SalesReturnService {
     return await this.salesReturnRepo
       .createQueryBuilder('salesReturn')
       .leftJoinAndSelect('salesReturn.salesChild', 'salesChild')
+      .leftJoinAndSelect('salesChild.product', 'product')
       .leftJoin('salesChild.salesMaster', 'salesMaster')
       .where('salesMaster.user = :userId', { userId: userId })
       .getMany();

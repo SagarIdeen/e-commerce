@@ -16,7 +16,7 @@ export class SalesReturn extends BaseEntity {
   @Column()
   status: string;
 
-  @OneToOne(() => SalesChild)
+  @OneToOne(() => SalesChild, (salesChild) => salesChild.salesReturn) // specify inverse side as a second parameter
   @JoinColumn()
   salesChild: SalesChild;
 }

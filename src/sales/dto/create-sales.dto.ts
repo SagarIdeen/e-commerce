@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, ValidateNested } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 export class CreateSalesMasterDto {
   @IsNumber()
@@ -11,8 +17,8 @@ export class CreateSalesMasterDto {
   @IsNotEmpty()
   readonly userId: number;
 
-  @IsNotEmpty()
-  readonly addressId: number;
+  @IsString()
+  address: string;
 
   @IsNotEmpty()
   @Type(() => SalesChild1)

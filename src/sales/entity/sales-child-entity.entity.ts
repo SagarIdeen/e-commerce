@@ -1,6 +1,7 @@
 import { BaseEntity } from 'src/common/database/base-entity.entity';
 import { Product } from 'src/product/entity/product-entity.entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { SalesReturn } from 'src/sales_return/entity/sales-return-entity.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { SalesMaster } from './sales-master.entity.entity';
 
 @Entity()
@@ -21,4 +22,7 @@ export class SalesChild extends BaseEntity {
 
   @ManyToOne(() => Product, (product) => product.id)
   product: Product;
+
+  @OneToOne(() => SalesReturn, (salesReturn) => salesReturn.salesChild) // specify inverse side as a second parameter
+  salesReturn: SalesReturn;
 }

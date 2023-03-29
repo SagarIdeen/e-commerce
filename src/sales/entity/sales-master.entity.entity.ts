@@ -15,8 +15,8 @@ export class SalesMaster extends BaseEntity {
   @ManyToOne(() => User, (user) => user.id)
   user: User;
 
-  @ManyToOne(() => Address, (address) => address.id)
-  address: Address;
+  @Column()
+  address: string;
 
   @OneToMany(() => SalesChild, (salesChild) => salesChild.salesMaster)
   salesChilds: SalesChild[];
