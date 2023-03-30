@@ -22,8 +22,8 @@ export class ReportsService {
   ) {}
 
   async reportByProduct() {
-    return this.salesChildRepo.find({
-      relations: ['product', 'product.category'],
+    return this.product.find({
+      relations: ['category'],
       //   where:[{}]
     });
     // return this.dataSource.query(
@@ -32,9 +32,10 @@ export class ReportsService {
   }
 
   async reportByProductFilterDate(createReportDto: CreateReportDto) {
-    let queryBasic = `SELECT * FROM product
-    LEFT JOIN sales_child
-    ON product.id = sales_child.product_id WHERE`;
+    let queryBasic = `SELECT product.created_at as date,product.id, product.name as product, product.price, product.url,category.name as category, category.id as categoryId  FROM category 
+              INNER JOIN product 
+              ON product.category_id = category.id
+              WHERE`;
 
     if (createReportDto.fromDate && createReportDto.toDate) {
       queryBasic += `\n  product.created_at BETWEEN :fromDate AND :toDate`;
@@ -51,16 +52,28 @@ export class ReportsService {
       createReportDto,
     );
     return this.dataSoruce.query(query, params);
-
-    // if(createReportDto.fromDate && createReportDto.toDate){
-    //     queryBasic += `WHERE product.id`
-    // }
-    // const f = new Date(from).toISOString();
-    // const t = new Date(to).toISOString();
-    // return this.dataSource.query(
-    //   `SELECT * FROM product LEFT JOIN sales_child ON product.id = sales_child.product_id WHERE product.created_at BETWEEN '${f}' AND '${t}';`,
-    // );
   }
+  // async reportByProductFilterDate(createReportDto: CreateReportDto) {
+  //   let queryBasic = `SELECT * FROM product
+  //   LEFT JOIN sales_child
+  //   ON product.id = sales_child.product_id WHERE`;
+
+  //   if (createReportDto.fromDate && createReportDto.toDate) {
+  //     queryBasic += `\n  product.created_at BETWEEN :fromDate AND :toDate`;
+  //   }
+  //   if (createReportDto.productId) {
+  //     queryBasic += `\n  AND product.id = :productId`;
+  //   }
+  //   if (createReportDto.categoryId) {
+  //     queryBasic += `\n AND category_id =:categoryId`;
+  //   }
+
+  //   const { query, params } = this.queryHelper.convertToQueryWithParameters(
+  //     queryBasic,
+  //     createReportDto,
+  //   );
+  //   return this.dataSoruce.query(query, params);
+  // }
 
   async reportBySalesReturn(): Promise<SalesReturn[]> {
     return await this.salesReturnRepo
