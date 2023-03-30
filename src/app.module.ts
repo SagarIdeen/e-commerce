@@ -1,4 +1,4 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, Inject, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -22,10 +22,27 @@ import { ReportsModule } from './reports/reports.module';
 import { QueryHelper } from './common/queryHelper.service';
 import { SalesReturnModule } from './sales_return/sales_return.module';
 import { SalesReturn } from './sales_return/entity/sales-return-entity.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import filesystem from './common/filesystem';
+import { StorageModule } from '@squareboat/nest-storage';
+import { config } from 'process';
+import { ImageUploadModule } from './image-upload/image-upload.module';
 
 @Module({
   imports: [
     CacheModule.register({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      expandVariables: true,
+      load: [filesystem],
+    }),
+    StorageModule.registerAsync({
+      imports: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return config.get('filesystem');
+      },
+      inject: [ConfigService],
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -56,6 +73,8 @@ import { SalesReturn } from './sales_return/entity/sales-return-entity.entity';
     SalesModule,
     ReportsModule,
     SalesReturnModule,
+    ImageUploadModule,
+    ImageUploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
