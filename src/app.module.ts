@@ -27,10 +27,16 @@ import filesystem from './common/filesystem';
 import { StorageModule } from '@squareboat/nest-storage';
 import { config } from 'process';
 import { ImageUploadModule } from './image-upload/image-upload.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
     CacheModule.register({ isGlobal: true }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), '..', '..'),
+      serveRoot: '/resource', //http://localhost:3000/resource/bgw.jpg
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       expandVariables: true,
@@ -82,4 +88,8 @@ import { ImageUploadModule } from './image-upload/image-upload.module';
 })
 export class AppModule {
   // constructor(dataSource: DataSource) {}
+
+  onModuleInit() {
+    // console.log(join(process.cwd(), '..', '..'));
+  }
 }
