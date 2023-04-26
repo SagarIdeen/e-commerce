@@ -34,7 +34,7 @@ import { join } from 'path';
   imports: [
     CacheModule.register({ isGlobal: true }),
     ServeStaticModule.forRoot({
-      rootPath: join(process.cwd(), '..', '..'),
+      rootPath: join(process.cwd(), '..', '../Images'),
       serveRoot: '/resource', //http://localhost:3000/resource/bgw.jpg
     }),
     ConfigModule.forRoot({
@@ -90,6 +90,6 @@ export class AppModule {
   // constructor(dataSource: DataSource) {}
 
   onModuleInit() {
-    // console.log(join(process.cwd(), '..', '..'));
+    console.log(join(process.cwd(), '..', '../Images'));
   }
 }
